@@ -24,6 +24,9 @@ void graphs::makePlot(int graphno){
       generations[i] = i+1; // generations
     }
 
+    //clear previous graphs
+    ui->customPlot->clearGraphs();
+
     // create graph and assign data to it:
     ui->customPlot->legend->setVisible(true);
     QFont legendFont = font();  // start out with MainWindow's font..
@@ -48,15 +51,17 @@ void graphs::makePlot(int graphno){
     ui->customPlot->yAxis->setLabel("fitness");
     // set axes ranges, so we see all data:
     ui->customPlot->xAxis->setRange(0, 20);
-    ui->customPlot->yAxis->setRange(0, 40);
+    ui->customPlot->yAxis->setRange(0, 100);
     //ui->customPlot->rescaleAxes();
     ui->customPlot->graph(0)->rescaleAxes();
     ui->customPlot->graph(1)->rescaleAxes();
+    ui->customPlot->replot();
 
 }
 
 
 void graphs::on_graphNo_valueChanged(double arg1)
 {
-    makePlot(arg1);
+    if(arg1 <= COUNT)
+        makePlot(arg1);
 }

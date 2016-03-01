@@ -19,7 +19,8 @@ SOURCES += main.cpp\
 
 HEADERS  += mainwindow.h \
     graphs.h \
-    qcustomplot.h
+    qcustomplot.h \
+    config.h
 
 FORMS    += mainwindow.ui \
     graphs.ui

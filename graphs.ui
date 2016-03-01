@@ -41,6 +41,9 @@
       <property name="decimals">
        <number>0</number>
       </property>
+      <property name="maximum">
+       <double>20.000000000000000</double>
+      </property>
      </widget>
     </widget>
    </item>

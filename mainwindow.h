@@ -1,20 +1,12 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <config.h>
 
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <iomanip>
-#include <fstream>
 #include <QMainWindow>
 
 
 using namespace std;
-
 
 namespace Ui {
     class MainWindow;
@@ -28,6 +20,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
     struct data
     {
       float x;
@@ -39,12 +32,27 @@ public:
     {
         inline bool operator() (const data& struct1, const data& struct2)
         {
-            return (struct1.fitness > struct2.fitness);
+            if(ORDER == "desc")
+                    return (struct1.fitness > struct2.fitness);
+                else
+                    return (struct1.fitness < struct2.fitness);
         }
     };
 
+    struct by_x
+    {
+        inline bool operator() (const data& struct1, const data& struct2)
+        {
+            if(ORDER == "desc")
+                    return (struct1.x > struct2.x);
+                else
+                    return (struct1.x < struct2.x);
+        }
+    };
+
+
     std::vector<data> population, newpopulation;
-    QVector<double> best, avg;
+    QVector<double> best, avg, best_best, avg_avg;
     data temp;
 
 
@@ -56,20 +64,14 @@ private slots:
 private:
     Ui::MainWindow *ui;
 
-    int count = 20;
-    int minX = -2;
-    int maxX = 2;
-    int minY = -5;
-    int maxY = 5;
-    string order = "desc";
-
     float randomRange(float, float);
 
-    float getFitness(float, float);
+    float getFitness(float, float, bool);
+
 
     float TotalFitness = 0;
 
-    float probilities[20], probilities_ranges[20];
+    float probilities[COUNT], probilities_ranges[COUNT];
 
     float offsprint_x1;
     float offsprint_y1;
@@ -78,14 +80,14 @@ private:
 
     data generateOffspring(float val){
         int init=0;
-        for(int i=0; i <= count; i++){
-            if(val >= init && i!=count && val < this->probilities_ranges[i]){
-                cout << "match";
-                cout << this->probilities_ranges[i] << endl;
+        for(int i=0; i <= COUNT; i++){
+            if(val >= init && i!=COUNT && val < this->probilities_ranges[i]){
+//                cout << "match";
+//                cout << this->probilities_ranges[i] << endl;
                 return this->population[i];
-            }else if(val == init && i==count){
-                cout << "match";
-                cout << this->probilities_ranges[i-1] << endl;
+            }else if(val == init && i==COUNT){
+//                cout << "match";
+//                cout << this->probilities_ranges[i-1] << endl;
                 return this->population[i-1];
             }else{
                 init = this->probilities_ranges[i];
@@ -93,11 +95,11 @@ private:
         }
     }
 
-    void mutation(float, float, float, float);
+    void mutation(float, float, float, float, bool);
 
 
-    void generatePopulations();
-    void calc_prob_ranges();
+    void generatePopulations(bool);
+    void calc_prob_ranges(bool);
 };
 
 #endif // MAINWINDOW_H

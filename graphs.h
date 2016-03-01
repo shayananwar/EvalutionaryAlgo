@@ -1,14 +1,7 @@
 #ifndef GRAPHS_H
 #define GRAPHS_H
 
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <iomanip>
-#include <fstream>
+#include <config.h>
 #include <QDialog>
 
 using namespace std;
@@ -32,7 +25,6 @@ public:
     };
 
     std::vector<plots> data;
-
 
 public slots:
     void makePlot(int);
