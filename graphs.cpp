@@ -15,8 +15,7 @@ graphs::~graphs()
 }
 
 void graphs::makePlot(int graphno){
-    cout << data[graphno].generation << endl;
-    cout << data[graphno].best.size() << endl;
+
     // generate some data:
     QVector<double> generations(20);
     for (int i=0; i< data[graphno].generation; i++)
@@ -46,6 +45,22 @@ void graphs::makePlot(int graphno){
     ui->customPlot->graph(1)->setPen(QPen(Qt::red));
 
     ui->customPlot->graph(1)->setName("Average");
+
+    ui->customPlot->addGraph();
+    ui->customPlot->graph(2)->setData(generations, data[graphno].pso_best);
+    ui->customPlot->graph(2)->setPen(QPen(Qt::yellow));
+    ui->customPlot->graph(2)->setName("pso-best");
+
+    ui->customPlot->addGraph();
+    ui->customPlot->graph(3)->setData(generations, data[graphno].ais_best);
+    ui->customPlot->graph(3)->setPen(QPen(Qt::green));
+    ui->customPlot->graph(3)->setName("ais-best");
+
+    ui->customPlot->addGraph();
+    ui->customPlot->graph(4)->setData(generations, data[graphno].ais_avg);
+    ui->customPlot->graph(4)->setPen(QPen(QColor(255, 100, 0)));
+    ui->customPlot->graph(4)->setName("ais-avg");
+
     // give the axes some labels:
     ui->customPlot->xAxis->setLabel("generatons");
     ui->customPlot->yAxis->setLabel("fitness");

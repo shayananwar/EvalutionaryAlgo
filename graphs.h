@@ -20,7 +20,7 @@ public:
 
     struct plots
     {
-        QVector<double> best, avg;
+        QVector<double> best, avg, pso_best, ais_best, ais_avg;
         int generation;
     };
 

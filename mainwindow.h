@@ -51,10 +51,23 @@ public:
     };
 
 
-    std::vector<data> population, newpopulation;
-    QVector<double> best, avg, best_best, avg_avg;
+    std::vector<data> population, newpopulation, ais_population;
+    QVector<double> best, avg, best_best, avg_avg, pso_best, pso_bb, ais_best,ais_bb, ais_avg, ais_avg_avg;
     data temp;
 
+    struct velocity{
+        float x;
+        float y;
+    };
+
+    struct particles
+    {
+      velocity v;
+      float fitness;
+    };
+
+    particles  gbest;
+    std::vector<particles> particle, lbest, present;
 
 private slots:
     void on_FPS_clicked();
@@ -100,6 +113,10 @@ private:
 
     void generatePopulations(bool);
     void calc_prob_ranges(bool);
+
+
+    void pso(void);
+    void ais(void);
 };
 
 #endif // MAINWINDOW_H
